@@ -6,20 +6,52 @@
     <title>Document</title>
   </head>
   <body>
-    <script src="vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
     <div id="app">
-      <p>{{message}}</p>
-      <button v-on:click="reverseMessage">メッセージ反転</button>
+      <p v-once>{{ message }}</p>
+      <p>{{number+ 5}}</p>
+      <p>{{ok ? 'Yes' : 'No' }}</p>
+      <p>{{sayHi()}}</p>
+      <div>{{ html }}</div>
+      <div v-html="html"></div>
+      <a v-bind:href="url">Google</a>
+      <a :[attribute]="url">Google</a>
+      <a v-bind="twitterObject">Twitter</a>
+      <p>{{number}}回クリックされています</p>
+      <button v-on:click="countUp"></button>
+      <p v-on:mousemove="changeMousePosition(3, $event)">
+        マウスを載せてください
+      </p>
+      <p>X:{{x}}, Y:{{y}},</p>
     </div>
     <script>
       new Vue({
         el: '#app',
         data: {
           message: 'HelloWorld',
+          number: 0,
+          ok: true,
+          html: '<h1>h1です</h1>',
+          url: 'https://google.com',
+          attribute: 'href',
+          twitterObject: {
+            href: 'https://twitter.com',
+            id: 11,
+          },
+          x: 0,
+          y: 0,
         },
         methods: {
-          reverseMessage: function () {
-            this.message = this.message.split('').reverse().join('')
+          sayHi: function () {
+            return this.message
+          },
+          countUp: function () {
+            return (this.number += 1)
+          },
+          changeMousePosition: function (divideNumber, event) {
+            this.x = event.clientX / divideNumber
+            this.y = event.clientY / divideNumber
           },
         },
       })
